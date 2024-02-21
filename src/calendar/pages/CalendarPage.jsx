@@ -1,5 +1,12 @@
+import { Navbar } from "../components";
+
 export const CalendarPage = () => {
   return (
-    <div>CalendarPage</div>
-  )
-}
+    <>
+      <Navbar />
+
+      <h1>CalendarPage</h1>
+      <hr />
+    </>
+  );
+};
