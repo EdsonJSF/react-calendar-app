@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addHours } from "date-fns";
+import { addHours, differenceInSeconds } from "date-fns";
 import Modal from "react-modal";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -49,6 +49,17 @@ export const CalendarModal = () => {
     setOpenModal(false);
   };
 
+  const handleSumbit = (event) => {
+    event.preventDefault();
+
+    const difference = differenceInSeconds(formValues.end, formValues.start);
+
+    if (isNaN(difference) || difference <= 0) return;
+    if (formValues.title.length <= 0) return;
+
+    console.log(formValues);
+  };
+
   return (
     <Modal
       isOpen={openModal}
@@ -60,11 +71,11 @@ export const CalendarModal = () => {
     >
       <h1> Nuevo evento </h1>
       <hr />
-      <form className="container">
+      <form className="container" onSubmit={handleSumbit}>
         <div className="form-group mb-2">
-          <label>Fecha y hora inicio</label>
-          <br />
+          <label htmlFor="start">Fecha y hora inicio</label>
           <DatePicker
+            id="start"
             className="form-control"
             dateFormat="Pp"
             showTimeSelect
@@ -76,9 +87,9 @@ export const CalendarModal = () => {
         </div>
 
         <div className="form-group mb-2">
-          <label>Fecha y hora fin</label>
-          <br />
+          <label htmlFor="end">Fecha y hora fin</label>
           <DatePicker
+            id="end"
             minDate={formValues.start}
             className="form-control"
             dateFormat="Pp"
@@ -92,8 +103,9 @@ export const CalendarModal = () => {
 
         <hr />
         <div className="form-group mb-2">
-          <label>Titulo y notas</label>
+          <label htmlFor="title">Titulo y notas</label>
           <input
+            id="title"
             type="text"
             className="form-control"
             placeholder="Título del evento"
