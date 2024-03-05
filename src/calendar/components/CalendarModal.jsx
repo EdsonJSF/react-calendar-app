@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { addHours, differenceInSeconds } from "date-fns";
+
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+
 import Modal from "react-modal";
+
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
 import es from "date-fns/locale/es";
 
 import "./CalendarModal.css";
@@ -30,6 +36,12 @@ export const CalendarModal = () => {
     end: addHours(new Date(), 2),
   });
   const [openModal, setOpenModal] = useState(true);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const titleClass = useMemo(() => {
+    if (!formSubmitted) return "";
+    return formValues.title.length > 0 ? "" : "is-invalid";
+  }, [formValues.title, formSubmitted]);
 
   const handleDateChange = (event, changing) => {
     setFormValues({
@@ -51,10 +63,14 @@ export const CalendarModal = () => {
 
   const handleSumbit = (event) => {
     event.preventDefault();
+    setFormSubmitted(true);
 
     const difference = differenceInSeconds(formValues.end, formValues.start);
 
-    if (isNaN(difference) || difference <= 0) return;
+    if (isNaN(difference) || difference <= 0) {
+      Swal.fire("Fechas incorrectas", "Revisar fechas ingresadas", "error");
+      return;
+    }
     if (formValues.title.length <= 0) return;
 
     console.log(formValues);
@@ -107,7 +123,7 @@ export const CalendarModal = () => {
           <input
             id="title"
             type="text"
-            className="form-control"
+            className={`form-control ${titleClass}`}
             placeholder="Título del evento"
             name="title"
             autoComplete="off"
