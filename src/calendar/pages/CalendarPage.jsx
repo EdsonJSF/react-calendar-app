@@ -5,6 +5,7 @@ import { addHours } from "date-fns";
 
 import { CalendarEvent, CalendarModal, Navbar } from "../components";
 import { getMessagesES, localizer } from "../../helpers";
+import { useUiStore } from "../../hooks";
 
 const events = [
   {
@@ -25,6 +26,7 @@ const storageNames = {
 };
 
 export const CalendarPage = () => {
+  const { openDateModal } = useUiStore();
   const [defaultView, setDefaultView] = useState(
     sessionStorage.getItem(storageNames.view) || "week"
   );
@@ -43,7 +45,7 @@ export const CalendarPage = () => {
   };
 
   const handleDoubleClick = (event) => {
-    console.log("doble click", event);
+    openDateModal();
   };
 
   const handleSelect = (event) => {
