@@ -11,7 +11,7 @@ const storageNames = {
 };
 
 export const CalendarPage = () => {
-  const { events } = useCalendarStore()
+  const { events, setActiveEvent } = useCalendarStore();
   const { openDateModal } = useUiStore();
   const [defaultView, setDefaultView] = useState(
     sessionStorage.getItem(storageNames.view) || "week"
@@ -35,7 +35,7 @@ export const CalendarPage = () => {
   };
 
   const handleSelect = (event) => {
-    console.log("Select", event);
+    setActiveEvent(event);
   };
 
   const handleViewChanged = (event) => {
