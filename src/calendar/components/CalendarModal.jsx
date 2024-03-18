@@ -30,7 +30,7 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export const CalendarModal = () => {
-  const { activeEvent } = useCalendarStore();
+  const { activeEvent, startSavingEvent } = useCalendarStore();
   const { closeDateModal, isDateModalOpen } = useUiStore();
   const [formValues, setFormValues] = useState({
     title: "",
@@ -68,7 +68,7 @@ export const CalendarModal = () => {
     closeDateModal();
   };
 
-  const handleSumbit = (event) => {
+  const handleSumbit = async (event) => {
     event.preventDefault();
     setFormSubmitted(true);
 
@@ -80,7 +80,9 @@ export const CalendarModal = () => {
     }
     if (formValues.title.length <= 0) return;
 
-    console.log(formValues);
+    await startSavingEvent(formValues);
+    closeDateModal();
+    setFormSubmitted(false);
   };
 
   return (
