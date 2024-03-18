@@ -30,7 +30,7 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 export const CalendarModal = () => {
-  const { activeEvent, startSavingEvent } = useCalendarStore();
+  const { activeEvent, startSavingEvent, setActiveEvent } = useCalendarStore();
   const { closeDateModal, isDateModalOpen } = useUiStore();
   const [formValues, setFormValues] = useState({
     title: "",
@@ -65,6 +65,7 @@ export const CalendarModal = () => {
   };
 
   const handleCloseModal = () => {
+    setActiveEvent(null);
     closeDateModal();
   };
 
