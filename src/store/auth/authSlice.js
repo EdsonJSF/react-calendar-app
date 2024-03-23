@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const statusOptions = {
+export const statusOptions = {
   authenticated: "authenticated",
   checking: "checking",
   notAuthenticated: "not-authenticated",

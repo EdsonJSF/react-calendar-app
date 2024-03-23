@@ -2,12 +2,14 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import { AuthRoutes } from "../auth";
 import { CalendarRoutes } from "../calendar";
+import { statusOptions } from "../store";
 
 export const AppRouter = () => {
-  const authStatus = "authenticated";
+  const authStatus = "checking";
+
   return (
     <Routes>
-      {authStatus === "authenticated" ? (
+      {authStatus === statusOptions.authenticated ? (
         <>
           <Route path="/calendar/*" element={<CalendarRoutes />} />
           <Route path="/*" element={<Navigate to="/calendar" />} />
