@@ -1,4 +1,4 @@
-import { useForm } from "../../hooks";
+import { useAuthStore, useForm } from "../../hooks";
 import "./LoginPage.css";
 
 const loginFormFields = {
@@ -14,6 +14,8 @@ const registerFormFields = {
 };
 
 export const LoginPage = () => {
+  const { startLogin } = useAuthStore();
+
   const {
     registerEmail,
     registerName,
@@ -30,7 +32,7 @@ export const LoginPage = () => {
 
   const handleLoginSubmit = (event) => {
     event.preventDefault();
-    console.log({ loginEmail, loginPassword });
+    startLogin({ email: loginEmail, password: loginPassword });
   };
 
   const handleRegisterSubmit = (event) => {
