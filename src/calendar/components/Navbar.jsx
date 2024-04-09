@@ -14,7 +14,7 @@ export const Navbar = () => {
 
       <button className="btn btn-outline-danger" onClick={startLogout}>
         <i className="fas fa-sign-out-alt me-2"></i>
-        <span>Sign out</span>
+        <span>Cerrar sesión</span>
       </button>
     </nav>
   );
