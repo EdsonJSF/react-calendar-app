@@ -79,6 +79,11 @@ export const useAuthStore = () => {
     }
   };
 
+  const startLogout = () => {
+    sessionStorage.clear();
+    dispatch(onLogout());
+  };
+
   return {
     status,
     user,
@@ -87,5 +92,6 @@ export const useAuthStore = () => {
     startLogin,
     startRegister,
     checkAuthToken,
+    startLogout,
   };
 };
