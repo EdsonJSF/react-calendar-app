@@ -10,13 +10,14 @@ import {
   Navbar,
 } from "../components";
 import { getMessagesES, localizer } from "../../helpers";
-import { useCalendarStore, useUiStore } from "../../hooks";
+import { useAuthStore, useCalendarStore, useUiStore } from "../../hooks";
 
 const storageNames = {
   view: "defaultView",
 };
 
 export const CalendarPage = () => {
+  const { user } = useAuthStore();
   const { events, startLoadingEvent, setActiveEvent } = useCalendarStore();
   const { openDateModal } = useUiStore();
   const [defaultView, setDefaultView] = useState(
@@ -27,9 +28,12 @@ export const CalendarPage = () => {
     startLoadingEvent();
   }, []);
 
-  const eventStyleGetter = (event, start, end, isSelected) => {
+  const eventStyleGetter = (event) => {
+    const isMyEvent =
+      user.uid === event.user._id || user.uid === event.user.uid;
+
     const style = {
-      backgroundColor: "#347VDF7",
+      backgroundColor: isMyEvent ? "#347VDF7" : "#464646",
       borderRadius: "0px",
       opacity: 0.8,
       color: "white",
