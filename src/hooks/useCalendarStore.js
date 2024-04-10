@@ -33,8 +33,8 @@ export const useCalendarStore = () => {
 
   const startSavingEvent = async (calendarEvent) => {
     if (calendarEvent.id) {
-      // UPDATE
-      dispatch(onUpdateEvent({ ...calendarEvent }));
+      await calendarApi.put(`/events/${calendarEvent.id}`, calendarEvent);
+      dispatch(onUpdateEvent({ ...calendarEvent, user }));
     } else {
       const { data } = await calendarApi.post("/events", calendarEvent);
       const { evento } = data;
