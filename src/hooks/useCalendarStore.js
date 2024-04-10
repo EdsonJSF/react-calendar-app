@@ -6,24 +6,25 @@ import {
   onSetActiveEvent,
   onUpdateEvent,
 } from "../store";
+import { calendarApi } from "../api";
 
 export const useCalendarStore = () => {
   const dispatch = useDispatch();
   const { events, activeEvent } = useSelector((state) => state.calendar);
+  const { user } = useSelector((state) => state.auth);
 
   const setActiveEvent = (event) => {
     dispatch(onSetActiveEvent(event));
   };
 
   const startSavingEvent = async (calendarEvent) => {
-    // TODO: go to backend
-
-    if (calendarEvent._id) {
+    if (calendarEvent.id) {
       // UPDATE
       dispatch(onUpdateEvent({ ...calendarEvent }));
     } else {
-      // CREATE
-      dispatch(onAddNewEvent({ ...calendarEvent, _id: crypto.randomUUID() }));
+      const { data } = await calendarApi.post("/events", calendarEvent);
+      const { evento } = data;
+      dispatch(onAddNewEvent({ ...calendarEvent, id: evento.id, user }));
     }
   };
 
