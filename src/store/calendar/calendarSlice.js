@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { addHours } from "date-fns";
 const tempEvent = {
-  _id: crypto.randomUUID(),
+  id: crypto.randomUUID(),
   title: "title",
   notes: "notes",
   start: new Date(),
@@ -32,7 +32,7 @@ export const calendarSlice = createSlice({
     },
     onUpdateEvent: (state, action) => {
       state.events = state.events.map((event) => {
-        if (event._id === action.payload._id) {
+        if (event.id === action.payload.id) {
           event = action.payload;
         }
         return event;
@@ -42,7 +42,7 @@ export const calendarSlice = createSlice({
     onDeleteEvent: (state) => {
       if (state.activeEvent) {
         state.events = state.events.filter(
-          (event) => event._id !== state.activeEvent._id
+          (event) => event.id !== state.activeEvent.id
         );
         state.activeEvent = null;
       }
